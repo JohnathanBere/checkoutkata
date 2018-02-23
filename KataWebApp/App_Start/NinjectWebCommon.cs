@@ -1,4 +1,5 @@
-﻿using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+﻿using KataWebDomain.Services.Interfaces;
+using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using Ninject;
 using Ninject.Web.Common;
 using Ninject.Web.Common.WebHost;
@@ -6,12 +7,13 @@ using Ninject.Web.WebApi;
 using System;
 using System.Web;
 using System.Web.Http;
+using KataWebDomain.Services;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(KataWebApp.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(KataWebApp.App_Start.NinjectWebCommon), "Stop")]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(KataWebApp.NinjectWebCommon), "Start")]
+[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(KataWebApp.NinjectWebCommon), "Stop")]
 
 
-namespace KataWebApp.App_Start
+namespace KataWebApp
 {
     public class NinjectWebCommon
     {
@@ -65,6 +67,8 @@ namespace KataWebApp.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             // kernel.Bind<IService>().To<Service>();
+            kernel.Bind<ICheckout>().To<Checkout>();
+            kernel.Bind<IDiscount>().To<Discount>();
         }
 
     }
